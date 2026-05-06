@@ -15,6 +15,9 @@ const MiniGame: React.FC = () => {
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [isStarted, setIsStarted] = useState<boolean>(false);
+  
+  // Touch state for swipe gestures
+  const [touchStart, setTouchStart] = useState<Point | null>(null);
 
   const generateFood = useCallback((): Point => {
     let newFood: Point;
@@ -39,6 +42,7 @@ const MiniGame: React.FC = () => {
     setFood(generateFood());
   };
 
+  // Keyboard Controls
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isStarted || gameOver) return;
     
@@ -69,6 +73,34 @@ const MiniGame: React.FC = () => {
         break;
     }
   }, [isStarted, gameOver]);
+
+  // Touch Controls (Swipe)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart || !isStarted || gameOver) return;
+    
+    const touchEnd = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+    const deltaX = touchEnd.x - touchStart.x;
+    const deltaY = touchEnd.y - touchStart.y;
+    
+    // Minimum swipe distance
+    if (Math.abs(deltaX) < 30 && Math.abs(deltaY) < 30) return;
+    
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      // Horizontal swipe
+      if (deltaX > 0) setDirection(prev => prev.x === -1 ? prev : { x: 1, y: 0 });
+      else setDirection(prev => prev.x === 1 ? prev : { x: -1, y: 0 });
+    } else {
+      // Vertical swipe
+      if (deltaY > 0) setDirection(prev => prev.y === -1 ? prev : { x: 0, y: 1 });
+      else setDirection(prev => prev.y === 1 ? prev : { x: 0, y: -1 });
+    }
+    
+    setTouchStart(null);
+  };
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown, { passive: false });
@@ -134,12 +166,16 @@ const MiniGame: React.FC = () => {
           </div>
           
           <div className="game-controls-info">
-            <p>Controls: W A S D / Arrows</p>
+            <p>Controls: W A S D / Arrows / Swipe</p>
           </div>
         </div>
 
         <div className="game-board-column">
-          <div className="board-wrapper">
+          <div 
+            className="board-wrapper"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div 
               className="game-board"
               style={{
@@ -174,6 +210,16 @@ const MiniGame: React.FC = () => {
                 </div>
               </div>
             )}
+          </div>
+          
+          {/* Mobile on-screen D-PAD */}
+          <div className="mobile-dpad">
+            <button className="dpad-btn" onClick={() => setDirection(prev => prev.y === 1 ? prev : { x: 0, y: -1 })}>↑</button>
+            <div className="dpad-middle">
+              <button className="dpad-btn" onClick={() => setDirection(prev => prev.x === 1 ? prev : { x: -1, y: 0 })}>←</button>
+              <button className="dpad-btn" onClick={() => setDirection(prev => prev.x === -1 ? prev : { x: 1, y: 0 })}>→</button>
+            </div>
+            <button className="dpad-btn" onClick={() => setDirection(prev => prev.y === -1 ? prev : { x: 0, y: 1 })}>↓</button>
           </div>
         </div>
         
