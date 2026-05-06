@@ -211,16 +211,6 @@ const MiniGame: React.FC = () => {
               </div>
             )}
           </div>
-          
-          {/* Mobile on-screen D-PAD */}
-          <div className="mobile-dpad">
-            <button className="dpad-btn" onClick={() => setDirection(prev => prev.y === 1 ? prev : { x: 0, y: -1 })}>↑</button>
-            <div className="dpad-middle">
-              <button className="dpad-btn" onClick={() => setDirection(prev => prev.x === 1 ? prev : { x: -1, y: 0 })}>←</button>
-              <button className="dpad-btn" onClick={() => setDirection(prev => prev.x === -1 ? prev : { x: 1, y: 0 })}>→</button>
-            </div>
-            <button className="dpad-btn" onClick={() => setDirection(prev => prev.y === -1 ? prev : { x: 0, y: 1 })}>↓</button>
-          </div>
         </div>
         
       </div>
