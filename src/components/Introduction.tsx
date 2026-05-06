@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Introduction.css';
+import heroImage from '../assets/hero_ginga-1.png';
 
 const Introduction: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
@@ -30,8 +31,7 @@ const Introduction: React.FC = () => {
       </div>
       
       <div className={`intro-image-container ${loaded ? 'visible' : ''}`}>
-        {/* Placeholder for an artistic editorial image or abstract architectural shape */}
-        <div className="editorial-block"></div>
+        <img src={heroImage} className="editorial-image" alt="Profile of 林新興" />
       </div>
     </section>
   );
