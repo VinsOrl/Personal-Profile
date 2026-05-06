@@ -42,7 +42,6 @@ const MiniGame: React.FC = () => {
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isStarted || gameOver) return;
     
-    // Prevent default scrolling for arrow keys
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
       e.preventDefault();
     }
@@ -84,7 +83,6 @@ const MiniGame: React.FC = () => {
         const head = prevSnake[0];
         const newHead = { x: head.x + direction.x, y: head.y + direction.y };
 
-        // Check collision with walls
         if (
           newHead.x < 0 || newHead.x >= GRID_SIZE ||
           newHead.y < 0 || newHead.y >= GRID_SIZE
@@ -93,7 +91,6 @@ const MiniGame: React.FC = () => {
           return prevSnake;
         }
 
-        // Check collision with self
         if (prevSnake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
           setGameOver(true);
           return prevSnake;
@@ -101,7 +98,6 @@ const MiniGame: React.FC = () => {
 
         const newSnake = [newHead, ...prevSnake];
 
-        // Check if food eaten
         if (newHead.x === food.x && newHead.y === food.y) {
           setScore(s => s + 10);
           setFood(generateFood());
@@ -119,49 +115,68 @@ const MiniGame: React.FC = () => {
 
   return (
     <section className="minigame-section" id="minigame">
-      <div className="game-container glass-panel">
-        <div className="game-header">
-          <h2>Retro <span className="highlight">Snake</span></h2>
-          <p className="score">Score: <span>{score}</span></p>
-        </div>
+      <div className="minigame-layout fade-in">
         
-        <div className="board-wrapper">
-          <div 
-            className="game-board"
-            style={{
-              gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
-              gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`
-            }}
-          >
-            {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, i) => {
-              const x = i % GRID_SIZE;
-              const y = Math.floor(i / GRID_SIZE);
-              
-              const isSnake = snake.some(s => s.x === x && s.y === y);
-              const isHead = snake[0].x === x && snake[0].y === y;
-              const isFood = food.x === x && food.y === y;
-              
-              return (
-                <div 
-                  key={i} 
-                  className={`cell ${isSnake ? 'snake' : ''} ${isHead ? 'snake-head' : ''} ${isFood ? 'food' : ''}`}
-                />
-              );
-            })}
+        <div className="game-text-column">
+          <h2 className="section-title">The <br/><span className="highlight">Intermission.</span></h2>
+          <p className="game-description">
+            A minimalist interpretation of the classic Snake. Navigate the grid with precision.
+          </p>
+          <div className="game-stats">
+            <div className="stat">
+              <span className="stat-label">Score</span>
+              <span className="stat-value">{String(score).padStart(3, '0')}</span>
+            </div>
+            <div className="stat">
+              <span className="stat-label">Status</span>
+              <span className="stat-value">{gameOver ? 'Ended' : isStarted ? 'Active' : 'Idle'}</span>
+            </div>
           </div>
           
-          {(!isStarted || gameOver) && (
-            <div className="game-overlay">
-              <div className="overlay-content">
-                {gameOver && <h3>Game Over!</h3>}
-                <button className="btn primary-btn" onClick={startGame}>
-                  {gameOver ? 'Play Again' : 'Start Game'}
-                </button>
-              </div>
-            </div>
-          )}
+          <div className="game-controls-info">
+            <p>Controls: W A S D / Arrows</p>
+          </div>
         </div>
-        <p className="game-instructions">Use W,A,S,D or Arrow keys to move.</p>
+
+        <div className="game-board-column">
+          <div className="board-wrapper">
+            <div 
+              className="game-board"
+              style={{
+                gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
+                gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`
+              }}
+            >
+              {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, i) => {
+                const x = i % GRID_SIZE;
+                const y = Math.floor(i / GRID_SIZE);
+                
+                const isSnake = snake.some(s => s.x === x && s.y === y);
+                const isHead = snake[0].x === x && snake[0].y === y;
+                const isFood = food.x === x && food.y === y;
+                
+                return (
+                  <div 
+                    key={i} 
+                    className={`cell ${isSnake ? 'snake' : ''} ${isHead ? 'snake-head' : ''} ${isFood ? 'food' : ''}`}
+                  />
+                );
+              })}
+            </div>
+            
+            {(!isStarted || gameOver) && (
+              <div className="game-overlay">
+                <div className="overlay-content">
+                  {gameOver && <h3 className="game-over-text">Fin.</h3>}
+                  <button className="btn primary-btn" onClick={startGame}>
+                    {gameOver ? 'Restart' : 'Begin'}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        
       </div>
     </section>
   );

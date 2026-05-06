@@ -1,85 +1,125 @@
 .profile-section {
-  padding: 5rem 5%;
+  padding: 8rem 5%;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
 }
 
 .profile-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 3rem;
-  width: 100%;
 }
 
-.profile-header {
-  text-align: center;
-  margin-bottom: 4rem;
+.section-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 3rem;
 }
 
-.profile-header h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  margin-bottom: 0.5rem;
+.profile-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 8rem;
 }
 
-.tagline {
-  font-size: 1.2rem;
-  color: var(--color-primary);
-  margin-bottom: 2rem;
-  font-weight: 600;
+.bio-large {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.4;
+  color: var(--color-accent);
 }
 
-.bio {
-  max-width: 800px;
-  margin: 0 auto;
-  font-size: 1.1rem;
+.bio-details {
+  font-size: 1rem;
   color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.university-tag {
+  margin-top: 2rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
+  align-self: flex-start;
+  padding-bottom: 0.5rem;
 }
 
 .profile-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 4rem;
 }
 
-.card {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: var(--transition);
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--color-primary);
-  box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.2);
-}
-
-.card h3 {
-  color: var(--color-text);
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
+.editorial-card {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  flex-direction: column;
 }
 
-.card ul {
-  list-style-position: inside;
-  color: var(--color-text-muted);
+.card-number {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--color-border);
+  margin-bottom: 1.5rem;
 }
 
-.card li {
-  margin-bottom: 0.5rem;
+.editorial-card h3 {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  color: var(--color-accent);
 }
 
-.card p {
-  color: var(--color-text-muted);
+.editorial-card p, .editorial-list {
   font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
 }
 
-.card strong {
-  color: var(--color-secondary);
+.editorial-list {
+  list-style: none;
+}
+
+.editorial-list li {
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.editorial-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-border);
+}
+
+.editorial-card strong {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+  .profile-intro {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .profile-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
 }
