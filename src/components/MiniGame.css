@@ -1,0 +1,110 @@
+.minigame-section {
+  padding: 5rem 5%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.game-header h2 {
+  font-size: 2rem;
+}
+
+.score {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.score span {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.board-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 2px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+.game-board {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+.cell {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.cell.snake {
+  background: var(--color-primary);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--color-primary);
+}
+
+.cell.snake-head {
+  background: var(--color-secondary);
+  box-shadow: 0 0 10px var(--color-secondary);
+  border-radius: 4px;
+}
+
+.cell.food {
+  background: #ec4899;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #ec4899;
+  animation: pulse 1s infinite alternate;
+}
+
+.game-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.overlay-content h3 {
+  font-size: 2.5rem;
+  color: #ef4444;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.game-instructions {
+  margin-top: 1.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+@keyframes pulse {
+  from { transform: scale(0.8); }
+  to { transform: scale(1.1); }
+}
