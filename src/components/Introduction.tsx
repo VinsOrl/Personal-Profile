@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Introduction.css';
 import heroImage from '../assets/hero_ginga-1.png';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const Introduction: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setLoaded(true);
@@ -13,19 +15,19 @@ const Introduction: React.FC = () => {
     <section className="intro-section" id="intro">
       <div className={`intro-container ${loaded ? 'visible' : ''}`}>
         <div className="intro-text-wrapper">
-          <p className="intro-kicker">Portfolio 2026</p>
+          <p className="intro-kicker">{t.intro.kicker}</p>
           <h1 className="intro-title">
-            The Intersection of <br />
-            <span className="highlight">Intelligence</span> & Design.
+            {t.intro.titleLead}<br />
+            <span className="highlight">{t.intro.titleHighlight}</span>{t.intro.titleTail}
           </h1>
         </div>
-        
+
         <div className="intro-details">
           <p className="intro-subtitle">
-            I'm 林新興, an aspiring Computer Science student building the future through code, AI, and creative digital experiences.
+            {t.intro.subtitle}
           </p>
           <div className="intro-actions">
-            <a href="#profile" className="btn primary-btn">Discover More</a>
+            <a href="#profile" className="btn primary-btn">{t.intro.cta}</a>
           </div>
         </div>
       </div>

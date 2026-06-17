@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './MiniGame.css';
+import { useLanguage } from '../i18n/LanguageContext';
 
 type Point = { x: number; y: number };
 
@@ -9,6 +10,7 @@ const INITIAL_DIRECTION = { x: 0, y: -1 };
 const INITIAL_SPEED = 150;
 
 const MiniGame: React.FC = () => {
+  const { t } = useLanguage();
   const [snake, setSnake] = useState<Point[]>(INITIAL_SNAKE);
   const [direction, setDirection] = useState<Point>(INITIAL_DIRECTION);
   const [food, setFood] = useState<Point>({ x: 15, y: 5 });
@@ -150,23 +152,23 @@ const MiniGame: React.FC = () => {
       <div className="minigame-layout fade-in">
         
         <div className="game-text-column">
-          <h2 className="section-title">The <br/><span className="highlight">Intermission.</span></h2>
+          <h2 className="section-title">{t.minigame.titleLead}<br/><span className="highlight">{t.minigame.titleHighlight}</span></h2>
           <p className="game-description">
-            A minimalist interpretation of the classic Snake. Navigate the grid with precision.
+            {t.minigame.description}
           </p>
           <div className="game-stats">
             <div className="stat">
-              <span className="stat-label">Score</span>
+              <span className="stat-label">{t.minigame.score}</span>
               <span className="stat-value">{String(score).padStart(3, '0')}</span>
             </div>
             <div className="stat">
-              <span className="stat-label">Status</span>
-              <span className="stat-value">{gameOver ? 'Ended' : isStarted ? 'Active' : 'Idle'}</span>
+              <span className="stat-label">{t.minigame.status}</span>
+              <span className="stat-value">{gameOver ? t.minigame.statusEnded : isStarted ? t.minigame.statusActive : t.minigame.statusIdle}</span>
             </div>
           </div>
-          
+
           <div className="game-controls-info">
-            <p>Controls: W A S D / Arrows / Swipe</p>
+            <p>{t.minigame.controls}</p>
           </div>
         </div>
 
@@ -203,9 +205,9 @@ const MiniGame: React.FC = () => {
             {(!isStarted || gameOver) && (
               <div className="game-overlay">
                 <div className="overlay-content">
-                  {gameOver && <h3 className="game-over-text">Fin.</h3>}
+                  {gameOver && <h3 className="game-over-text">{t.minigame.gameOver}</h3>}
                   <button className="btn primary-btn" onClick={startGame}>
-                    {gameOver ? 'Restart' : 'Begin'}
+                    {gameOver ? t.minigame.restart : t.minigame.begin}
                   </button>
                 </div>
               </div>

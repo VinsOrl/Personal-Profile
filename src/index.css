@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600&display=swap');
 
 :root {
   --color-bg: #f9f9f8;
@@ -6,18 +6,36 @@
   --color-text-muted: #666666;
   --color-accent: #000000;
   --color-border: #e0e0e0;
-  
-  --font-serif: 'Playfair Display', serif;
-  --font-sans: 'Inter', sans-serif;
+
+  --font-serif: 'Playfair Display', 'Noto Serif TC', serif;
+  --font-sans: 'Inter', 'Noto Sans TC', sans-serif;
   
   --transition-slow: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   --transition-medium: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+[data-theme='dark'] {
+  --color-bg: #141312;
+  --color-text: #ededea;
+  --color-text-muted: #9b9a95;
+  --color-accent: #f5f4f1;
+  --color-border: #2c2b28;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Subtle, readability-focused type scale. Chinese is bumped a touch more,
+   since CJK glyphs read denser than Latin at the same point size. */
+html {
+  font-size: 106%;
+}
+
+html[lang='zh-Hant'] {
+  font-size: 113%;
 }
 
 body {
@@ -29,6 +47,11 @@ body {
   scroll-behavior: smooth;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+html[lang='zh-Hant'] body {
+  line-height: 1.85;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -108,7 +131,8 @@ a {
 
 .nav-links {
   display: flex;
-  gap: 3rem;
+  align-items: center;
+  gap: 2rem;
 }
 
 .nav-links a {
@@ -121,6 +145,42 @@ a {
 
 .nav-links a:hover {
   color: var(--color-accent);
+}
+
+.lang-toggle,
+.theme-toggle {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1;
+  transition: var(--transition-medium);
+}
+
+.lang-toggle {
+  padding: 0.35rem 0.9rem;
+}
+
+.theme-toggle {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  padding: 0;
+}
+
+.lang-toggle:hover,
+.theme-toggle:hover {
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 main {
